@@ -1,19 +1,49 @@
-use myFamily;
-create table familyMember(
-id int primary key auto_increment not null,
-name varchar(25) default "noname",
-age int default 0,
-gender varchar(6)
+create database relationship;
+use relationship;
+create table Unicorns(
+  Id int primary key auto_increment not null,
+  Name varchar(25),
+  Color varchar(25)
 );
-insert into familyMember (name, age, gender)
-values
-       ('Vitalii', 23, 'male'),
-       ('Olenka', 13, 'female'),
-       ('Oleksiy', 42, 'male'),
-       ('Tanya', 42, 'female');
-select * from familyMember where age <3 or age > 15;
-update familyMember set age = 20 where id = 1;
-select * from familyMember;
-delete from familyMember where name like '__e%';
-drop table familyMember;
-drop database myFamily;
+alter table Unicorns rename column  id to unicornId;
+
+create table Forests(
+  forestId int primary key auto_increment not null,
+  forestName varchar(25),
+  forestLocation varchar(25)
+);
+create table unicornsForests(
+  Id int primary key auto_increment not null,
+  forestId int,
+  unicornId int,
+  foreign key xxx(forestId) references Forests(forestId),
+  foreign key zzz(unicornId) references Unicorns(id)
+);
+
+insert into Unicorns(name, color)
+VALUES('Panelopa','Green'),
+('Wayne','Yellow'),
+('Anelia','White'),
+('Brush','Red');
+
+insert into Forests(forestName, forestLocation)
+VALUES ('Big forest','London'),
+       ('Grey wisp','New York'),
+       ('Brykhovickiy lis','Lviv'),
+       ('The great forest','Berlin');
+
+insert into unicornsForests(forestId, unicornId) VALUES
+(1,3),
+(2,4),
+(3,2),
+(4,2);
+insert into unicornsForests(forestId, unicornId) VALUES
+(2,3),
+(2,4),
+(1,2),
+(1,2);
+
+select count(uF.unicornId) as AmountofUnicorns, forestName from Unicorns
+join unicornsForests uF on Unicorns.unicornId = uF.unicornId
+join Forests F on uF.forestId = F.forestId
+group by forestName;

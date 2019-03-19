@@ -204,6 +204,13 @@ select * from application;
 
 /* 20. Видалити кредити клієнтів, в яких друга літера прізвища є голосною. */
 
+delete application from application
+right join  client c on application.Client_idClient = c.idClient
+where LastName regexp '^.[aeyuio]+';
+
+select * from application
+right join client c on application.Client_idClient = c.idClient
+where LastName regexp '^.[aeyuio]+';
 
 /*  21.Знайти львівські відділення, які видали кредитів на загальну суму більше ніж 5000*/
 select distinct Department_idDepartment,FirstName,LastName,DepartmentCity from client
